@@ -143,12 +143,6 @@ services:
     volumes:
       - ${config}/radarr:/config
       - ${data}:/data
-  readarr:
-    container_name: ${readarrName}
-    restart: ${restart}
-    image: ${provider}/readarr
-    ports:
-      - ${readarrPort}
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
