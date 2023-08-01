@@ -1,5 +1,7 @@
 <a style="color:white" href="https://sppongy.com"><h1 align="center"><sup>S</sup>ppongy<sub>.com</sub></h1></a>
-<p align="center"> I'll put everything in a wiki eventually</p>
+<p align="center"> I'll put everything in a BLOG eventually</p>
+
+### deadusb
 
 ### Containers
 - <a style="color:white" href="https://github.com/NginxProxyManager/nginx-proxy-manager">Nginx Proxy Manager</a>
@@ -13,8 +15,7 @@
 - <a style="color:white" href="https://github.com/Prowlarr/Prowlarr">Prowlarr</a>
 - <a style="color:white" href="https://github.com/morpheus65535/bazarr">Bazarr</a>
 - <a style="color:white" href="https://github.com/kiranshila/Doplarr">Doplarr</a>
-- <a style="color:white" href="https://github.com/HaveAGitGat/Tdarr">Tdarr</a>
 - <a style="color:white" href="https://github.com/qbittorrent/qBittorrent">qBittorrent</a>
-- <a style="color:white" href="https://github.com/sabnzbd/sabnzbd">SABnzbd</a>
+- <a style="color:white" href="https://github.com/sabnzbd/sabnzbd">sabNZBD</a>
 - <a style="color:white" href="https://github.com/go-gitea/gitea">Gitea</a>
 - <a style="color:white" href="https://github.com/benphelps/homepage">Homepage</a>
