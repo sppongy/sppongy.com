@@ -164,7 +164,7 @@ services:
       - RADARR__URL=http://radarr:${radarrPort}
       - SONARR__API=95172fe34cb84f46a9b2ab2fb07d1dc5
       - RADARR__API=5db5a2ad68394bc29d8897229df0aff2
-      - DISCORD__TOKEN=MTExNTQwODU0MDAzOTkyNTgxMA.GC80Cd.jA-EhiAlPll-1b1FGbd5xZpUNc7Qhtzgub7tMA
+      - DISCORD__TOKEN=${doplarrToken}
   tdarr:
     container_name: tdarr
     image: ghcr.io/haveagitgat/tdarr:latest
@@ -255,7 +255,7 @@ services:
       - TZ=${TZ}
       - OWNER=${ownerID}
       - PREFIX=${prefix}
-      - TOKEN=${discordToken}
+      - TOKEN=${redbotToken}
       
 
 
