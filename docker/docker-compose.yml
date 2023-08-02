@@ -1,4 +1,4 @@
-version: "3"
+version: "3.1"
 services:
   vaultwarden:
     image: vaultwarden/server:latest
@@ -7,8 +7,8 @@ services:
     environment:
       - DOMAIN=${vaultwardenURL}
       - PUSH_ENABLED=true
-      - PUSH_INSTALLATION_ID=${vaultwardenID}
-      - PUSH_INSTALLATION_KEY=${vaultwardenKEY}
+      - PUSH_INSTALLATION_ID=/run/secrets/vaultID
+      - PUSH_INSTALLATION_KEY=/run/secrets/vaultKey
     ports:
       - ${vaultwardenPort}
     volumes:
@@ -88,6 +88,7 @@ services:
       - LOG_LEVEL=debug
     volumes:
       - ${config}/jellyseerr:/app/config
+      - ${data}:/data
   prowlarr:
     container_name: ${prowlarrName}
     restart: ${restart}
@@ -143,14 +144,6 @@ services:
     volumes:
       - ${config}/radarr:/config
       - ${data}:/data
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - UMASK=${UMASK}
-      - TZ=${TZ}
-    volumes:
-      - ${config}/readarr:/config
-      - ${data}:/data
   doplarr:
     container_name: doplarr
     restart: unless-stopped
@@ -162,9 +155,9 @@ services:
       - TZ=${TZ}
       - SONARR__URL=http://sonarr:${sonarrPort}
       - RADARR__URL=http://radarr:${radarrPort}
-      - SONARR__API=95172fe34cb84f46a9b2ab2fb07d1dc5
-      - RADARR__API=5db5a2ad68394bc29d8897229df0aff2
-      - DISCORD__TOKEN=${doplarrToken}
+      - SONARR__API=/run/secrets/sonarr
+      - RADARR__API=/run/secrets/radarr
+      - DISCORD__TOKEN=/run/secrets/doplarr
   tdarr:
     container_name: tdarr
     image: ghcr.io/haveagitgat/tdarr:latest
@@ -255,7 +248,18 @@ services:
       - TZ=${TZ}
       - OWNER=${ownerID}
       - PREFIX=${prefix}
-      - TOKEN=${redbotToken}
-      
+      - TOKEN=/run/secrets/redbot
 
-
+secrets: 
+  doplarrToken:
+    file: ./secrets/doplarr
+  redbotToken:
+    file: ./secrets/redbot
+  sonarrAPI:
+    file: ./secrets/sonarr
+  radarrAPI:
+    file: ./secrets/radarr
+  vaultID:
+    file: ./secrets/vaultID
+  vaultKey:
+    file: ./secrets/vaultKey
