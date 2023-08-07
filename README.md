@@ -19,4 +19,4 @@
 - <a style="color:white" href="https://github.com/go-gitea/gitea">Gitea</a>
 - <a style="color:white" href="https://github.com/benphelps/homepage">Homepage</a>
 - <a style="color:white" href="https://github.com/benphelps/homepage">Homepage</a>
-- <a style="color:white" href="https://github.com/Cog-Creators/Red-DiscordBot">Reedbot</a>
+- <a style="color:white" href="https://github.com/Cog-Creators/Red-DiscordBot">Redbot</a>
