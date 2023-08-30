@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>sppongy.com</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<body>
+		<div class="wrapper">
+			<div id="boot" class="boot">
+				<div class="logo">
+					<img src="assets/spin.gif">
+					<h1><sup>S</sup>ppongy<sub>.com</sub></h1>
+				</div>
+			</div>
+			<div id="os" class="os">
+				<div class="launcher">
+					<div class="search">
+						<i class="fa fa-search" style="font-size: 1.3em;"></i>
+						<i class="text">Search..</i>
+					</div>
+					<div class="apps">
+						<ul>
+							<a href="https://media.sppongy.com"><li>Media Server</li></a>
+							<a href="https://blog.sppongy.com"><li>Blog</li></a>
+							<a href="https://discord.com"><li>Discord Server</li></a>
+							<a href="https://github.com/sppongy"><li>Github</li></a>
+							<a href="https://twitter.com"><li>Twitter</li></a>
+						</ul>
+					</div>
+				</div>
+				<div class="system">
+					<div class="term">
+						<p>~$ ROFLLMAOLOLRUSTPneofetch-ng</p>
+					</div>
+					<div class="neofetch">
+						<ul>
+							<li>Laptop: Dell xps 15</li>
+							<ul>
+								<li>OS: Arch Linux</li>	
+								<li>WM: Hyprland(wayland)</li>
+								<li>SHELL: zsh</li>
+							</ul>
+							<li>Desktop:</li>
+							<ul>
+								<li>OS: Arch Linux</li>
+								<li>WM: i3(xorg)</li>
+								<li>SHELL: zsh</li>
+								<li>CPU: Ryzen 5 3600</li>
+								<li>GPU: GTX 1660 Super</li>
+								<li></li>
+							</ul>
+						</ul>
+					</div>
+				</div>
+				<div class="art">
+				</div>
+				<div class="bar">
+					<div class="icon" style="order: 1; flex-grow: 1;">
+						<img src="assets/spin.gif">
+						<h1><sup>S</sup>ppongy<sub>.com</sub></h1>
+					</div>
+					<div class="workspaces" style="order: 2; flex-grow: 2;">
+						<ul>
+							<a href="https://media.sppongy.com"><li>Media</li></a>
+							<a href="https://blog.sppongy.com"><li>Blog</li></a>
+						</ul>
+					</div>
+					<div class="sep" style="order: 3; flex-grow: 4;"></div>
+					<div class="music" style="order: 4; flex-grow: 2;">
+					</div>
+					<div class="sep" style="order: 5; flex-grow: 4;"></div>
+					<div class="time" style="order: 6; flex-gow: 1;"><p><span id="time"></span></p></div>
+				</div>
+			</div>
+		</div>
+		<script>
+			setTimeout(function loading(){
+				document.getElementById("os").style.display = "block";
+        document.getElementById("boot").style.display = "none";
+    }, 1500);
+
+			var dt = new Date();
+			document.getElementById("time").innerHTML = dt.toLocaleTimeString();
+		</script>
+		<noscript>
+			<style>
+				.os {display: block}
+				.loading {display: none}
+			</style>
+		</noscript>
+	</body>
+</html>

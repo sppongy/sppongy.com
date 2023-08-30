@@ -13,7 +13,6 @@
 - <a style="color:white" href="https://github.com/Prowlarr/Prowlarr">Prowlarr</a>
 - <a style="color:white" href="https://github.com/morpheus65535/bazarr">Bazarr</a>
 - <a style="color:white" href="https://github.com/kiranshila/Doplarr">Doplarr</a>
-- <a style="color:white" href="https://github.com/HaveAGitGat/Tdarr">Tdarr</a>
 - <a style="color:white" href="https://github.com/qbittorrent/qBittorrent">qBittorrent</a>
 - <a style="color:white" href="https://github.com/sabnzbd/sabnzbd">SABnzbd</a>
 - <a style="color:white" href="https://github.com/go-gitea/gitea">Gitea</a>
