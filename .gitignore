@@ -1,0 +1,11 @@
+docker/secrets/
+docker/config/
+
+data/gitea/
+data/letsencrypt  
+data/media  
+data/nginxpm  
+data/redbot  
+data/torrents  
+data/usenet  
+data/vaultwarden
