@@ -33,10 +33,38 @@ services:
       - PEERDNS=auto 
       - LOG_CONFS=true
     volumes:
-      - /docker/config/wireguard:/config
+      - ${config}/wireguard:/config
       - /lib/modules:/lib/modules
     ports:
       - ${wireguardPort}
+      - ${wguiPort}
+  wgui:
+    image: ngoduykhanh/wireguard-ui:latest
+    container_name: ${wguiName}
+    depends_on:
+      - wireguard
+    restart: ${restart}
+    cap_add:
+      - NET_ADMIN
+    network_mode: service:wireguard
+    environment:
+      - SENDGRID_API_KEY
+      - EMAIL_FROM_ADDRESS
+      - EMAIL_FROM_NAME
+      - SESSION_SECRET
+      - BIND_ADDRESS=${wguiAddress}
+      - WGUI_USERNAME=admin
+      - WGUI_PASSWORD=adminpass
+      - WG_CONF_TEMPLATE
+      - WGUI_MANAGE_START=true
+      - WGUI_MANAGE_RESTART=true
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+    volumes:
+      - ${data}/wgui:/app/db
+      - ${config}/wgui:/etc/wireguard
   nginxpm:
     image: jc21/nginx-proxy-manager:latest
     container_name: ${nginxpmName}
@@ -76,7 +104,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${config}/sabnzbd:/config
-      - ${data}/usenet:/data
+      - ${data}/usenet:/data/usenet
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: ${jellyseerrName}
@@ -130,6 +158,7 @@ services:
     volumes:
       - ${config}/sonarr:/config
       - ${data}:/data
+      - ${data}/usenet/:/data/usenet
   radarr:
     container_name: ${radarrName}
     restart: ${restart}
@@ -144,6 +173,19 @@ services:
     volumes:
       - ${config}/radarr:/config
       - ${data}:/data
+  mylar3:
+    container_name: ${mylarName}
+    restart: ${restart}
+    image: lscr.io/linuxserver/mylar3:latest
+    ports:
+      - ${mylarPort}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${config}/mylar3:/config
+      - ${media}/books:/comics
   doplarr:
     container_name: doplarr
     restart: unless-stopped
@@ -225,6 +267,8 @@ services:
       - TOKEN=/run/secrets/redbot
 
 secrets: 
+  wguiPassword:
+    file: ./secrets/wgui
   doplarrToken:
     file: ./secrets/doplarr
   redbotToken:
