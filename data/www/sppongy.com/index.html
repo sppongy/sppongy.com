@@ -2,114 +2,51 @@
 <html>
 	<head>
 		<title>sppongy.com</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
 		<div class="wrapper">
 			<div id="boot" class="boot">
-				<div class="logo">
+				<div class="bootLogo">
 					<img src="assets/spin.gif">
 					<h1><sup>S</sup>ppongy<sub>.com</sub></h1>
 				</div>
 			</div>
-			<div id="os" class="os">
-				<div class="launcher">
-					<div class="search">
-						<i class="fa fa-search" style="font-size: 1.3em;"></i>
-						<i class="text">Search..</i>
-					</div>
-					<div class="apps">
-						<ul>
-							<a href="https://media.sppongy.com"><li>Media Server</li></a>
-							<a href="https://blog.sppongy.com"><li>Blog</li></a>
-							<a href="https://discord.com"><li>Discord Server</li></a>
-							<a href="https://github.com/sppongy"><li>Github</li></a>
-							<a href="https://twitter.com"><li>Twitter</li></a>
-						</ul>
-					</div>
+			<div id="main" class="main">
+				<div class="header">
+					<h1><sup>S</sup>ppongy<sub>.com</sub></h1> 
 				</div>
-				<div class="system">
-					<div class="term">
-						<p>~$ ROFLLMAOLOLRUSTPneofetch-ng</p>
-					</div>
-					<div class="neofetch">
-						<ul>
-							<li>Laptop: Dell xps 15</li>
-							<ul>
-								<li>OS: Arch Linux</li>	
-								<li>WM: Hyprland(wayland)</li>
-								<li>SHELL: zsh</li>
-							</ul>
-							<li>Desktop:</li>
-							<ul>
-								<li>OS: Arch Linux</li>
-								<li>WM: i3(xorg)</li>
-								<li>SHELL: zsh</li>
-								<li>CPU: Ryzen 5 3600</li>
-								<li>GPU: GTX 1660 Super</li>
-								<li></li>
-							</ul>
-						</ul>
-					</div>
+				<div class="linkLeft" id="links">
+					<ul>
+						<li><a href="#"><p>Discord Server(WIP)</p></a></li>
+						<li><a href="https://media.sppongy.com"><p>Media(WIP)</p></a></li>
+						<li><a href="https://uptime.sppongy.com"><p>Uptime(WIP)</p></a></li>
+					</ul>
 				</div>
-				<div class="art">
+				<div class="linkRight" id="links">
+					<ul>
+						<li><a href="https://discord.com/users/271430521169510401"><p>Discord</p></a></li>
+						<li><a href="https://twitter.com/sppongy"><p>Twitter</p></a></li>
+						<li><a href="https://steamcommunity.com/id/sppongy"><p>Steam</p></a></li>
+					</ul>
 				</div>
-				<div class="bar">
-					<div class="icon" style="order: 1; flex-grow: 1;">
-						<img src="assets/spin.gif">
-						<h1><sup>S</sup>ppongy<sub>.com</sub></h1>
-					</div>
-					<div class="workspaces" style="order: 2; flex-grow: 2;">
-						<ul>
-							<a href="https://media.sppongy.com"><li>Media</li></a>
-							<a href="https://blog.sppongy.com"><li>Blog</li></a>
-						</ul>
-					</div>
-					<div class="sep" style="order: 3; flex-grow: 4;"></div>
-					<div class="music" style="order: 4; flex-grow: 2;">
-					</div>
-					<div class="sep" style="order: 5; flex-grow: 4;"></div>
-					<div class="clock" style="order: 6; flex-gow: 1;"><div id="clock" onload="currentTime()"></div></div>
+				<div class="background">
+					<img src="assets/logo.png" id="logo" class="logo">
 				</div>
 			</div>
 		</div>
 		<script>
 			setTimeout(function loading(){
-				document.getElementById("os").style.display = "block";
+				document.getElementById("main").style.display = "block";
 				document.getElementById("boot").style.display = "none";
 			}, 1500);
-		
-			function currentTime() {
-				let date = new Date(); 
-				let hh = date.getHours();
-				let mm = date.getMinutes();
-				let ss = date.getSeconds();
-				let session = "AM";
-
-				if(hh == 0){
-					hh = 12;
-				}
-				if(hh > 12){
-					hh = hh - 12;
-					session = "PM";
-				}
-
-				hh = (hh < 10) ? "0" + hh : hh;
-				mm = (mm < 10) ? "0" + mm : mm;
-				ss = (ss < 10) ? "0" + ss : ss;
-    
-				let time = hh + ":" + mm + ":" + ss + " " + session;
-
-				document.getElementById("clock").innerText = time; 
-				let t = setTimeout(function(){ currentTime() }, 1000);
-			}
-			currentTime();
-
+			
 		</script>
 		<noscript>
 			<style>
-				.os {display: block}
+				.main {display: block}
 				.boot {display: none}
 			</style>
 		</noscript>
