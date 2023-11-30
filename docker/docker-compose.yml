@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.8"
 services:
   vaultwarden:
     image: vaultwarden/server:latest
@@ -91,6 +91,7 @@ services:
     volumes:
       - ${config}/qbittorrent:/config
       - ${data}/torrents:/data/torrents
+      - ${data}/media/books/manga:/data/media/books/manga # For auto manga downloading
   sabnzbd:
     container_name: ${sabnzbdName}
     restart: ${restart}
@@ -173,19 +174,6 @@ services:
     volumes:
       - ${config}/radarr:/config
       - ${data}:/data
-  mylar3:
-    container_name: ${mylarName}
-    restart: ${restart}
-    image: lscr.io/linuxserver/mylar3:latest
-    ports:
-      - ${mylarPort}
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${config}/mylar3:/config
-      - ${media}/books:/comics
   doplarr:
     container_name: doplarr
     restart: unless-stopped
@@ -228,22 +216,22 @@ services:
     volumes:
       - ${config}/kavita:/kavita/config
       - ${media}/books:/data/media/books 
-  gitea:
-    image: gitea/gitea:linux-arm64
-    container_name: ${giteaName}
-    restart: ${restart}
-    environment: 
-      - USER_UID=${PUID}
-      - USER_GID=${PGID}
-    volumes:
-      - ${data}/gitea:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - ${giteaPort}
-      - ${giteaAdmin}
+#  gitea:
+#    image: gitea/gitea:linux-arm64
+#   container_name: ${giteaName}
+#   restart: ${restart}
+#   environment: 
+#    - USER_UID=${PUID}
+#     - USER_GID=${PGID}
+#   volumes:
+#     - ${data}/gitea:/data
+#     - /etc/timezone:/etc/timezone:ro
+#     - /etc/localtime:/etc/localtime:ro
+#   ports:
+#     - ${giteaPort}
+#     - ${giteaAdmin}
   homepage:
-    image: ghcr.io/benphelps/homepage:latest
+    image: ghcr.io/gethomepage/homepage:latest
     container_name: ${homepageName}
     restart: ${restart}
     ports:
@@ -251,22 +239,56 @@ services:
     volumes:
       - ${config}/homepage:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
-  redbot:
-    image: phasecorex/red-discordbot
-    container_name: ${redbotName}
-    restart: ${restart}
-    volumes: 
-      - ${data}/redbot:/data
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - UMASK=${UMASK}
-      - TZ=${TZ}
-      - OWNER=${ownerID}
-      - PREFIX=${prefix}
-      - TOKEN=/run/secrets/redbot
+#  redbot:
+#    image: phasecorex/red-discordbot
+#    container_name: ${redbotName}
+#    restart: ${restart}
+#   volumes: 
+#     - ${data}/redbot:/data
+#   environment:
+#     - PUID=${PUID}
+#     - PGID=${PGID}
+#     - UMASK=${UMASK}
+#     - TZ=${TZ}
+#     - OWNER=${ownerID}
+#     - PREFIX=${prefix}
+#     - TOKEN=/run/secrets/redbot
 
-secrets: 
+  authelia:
+    container_name: authelia
+    image: authelia/authelia
+    volumes:
+      - ${config}/authelia:/config
+    ports:
+      - 9091:9091
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    secrets: [JWT_SECRET, SESSION_SECRET, STORAGE_ENCRYPTION_KEY]  
+    environment:
+      AUTHELIA_JWT_SECRET_FILE: /run/secrets/JWT_SECRET
+      AUTHELIA_SESSION_SECRET_FILE: /run/secrets/SESSION_SECRET
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /run/secrets/STORAGE_ENCRYPTION_KEY
+    depends_on:
+      - redis
+  redis:
+    container_name: redis
+    image: redis:alpine
+    volumes:
+      - ${data}/redis:/data
+    expose:
+      - 6379
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+
+secrets:
+  JWT_SECRET:
+    file: ./secrets/JWT_SECRET
+  SESSION_SECRET:
+    file: ./secrets/SESSION_SECRET 
+  STORAGE_ENCRYPTION_KEY:
+    file: ./secrets/STORAGE_ENCRYPTION_KEY
   wguiPassword:
     file: ./secrets/wgui
   doplarrToken:
