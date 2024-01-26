@@ -1,13 +1,26 @@
 <a style="color:white" href="https://sppongy.com"><h1 align="center"><sup>S</sup>ppongy<sub>.com</sub></h1></a>
-<p align="center"> I'll put everything in a wiki eventually</p>
+<p align="center">Where dreams die and blue emojis prosper</p>
 
-### Temp - Manga
-Auto downloading manga is a pain so i manually fill my backlog and use RSS for new chapters  
-qBittorrent has support for RSS feeds and auto download rules so that paired with nyaa.si's rss feeds it should work, (untested for now but looks like it'll work)  
-So honestly just check nyaa and find the format new chapters are usually posted in and set the rss rules to filter that :thumb:  
+### Purpose 
+I would not recommend attempting to mirror this setup exactly as the main purpose was honestly to just have a sandbox for me to learn but the services I run provide: 
 
-### Containers (out of date)
+- Auto downloading/management of TV/Movies through the *arr apps
+- Frontend for users through Jellyfin/seerr
+- Self hosted bitwarden instance
+- Reverse proxy
+- Git instance 
+- Remote VPN access
+- Blog (coming during the yotld [@devkarthin](https://github.com/devkarthin))
+
+with minimal bugs so feel free to take what you can 
+
+##### Manga disclaimer
+Auto downloading manga doesn't seem to have an easy solution so I recommend manually filling your backlog and using RSS for new chapters  
+qBittorrent has support for RSS feeds and auto download rules so that paired with a RSS capable indexer and it works quite well   
+
+### Containers
 - <a style="color:white" href="https://github.com/NginxProxyManager/nginx-proxy-manager">Nginx Proxy Manager</a>
+- <a style="color:white" href="https://github.com/authelia/authelia">Authelia</a>
 - <a style="color:white" href="https://github.com/linuxserver/docker-wireguard">Wireguard</a>
 - <a style="color:white" href="https://github.com/dani-garcia/vaultwarden">Vaultwarden</a>
 - <a style="color:white" href="https://github.com/jellyfin/jellyfin">Jellyfin</a>
@@ -23,7 +36,15 @@ So honestly just check nyaa and find the format new chapters are usually posted 
 - <a style="color:white" href="https://github.com/go-gitea/gitea">Gitea</a>
 - <a style="color:white" href="https://github.com/benphelps/homepage">Homepage</a>
 
-## Nginx Proxy Manager Authelia config
+---
+
+### Routing
+*more on my routing setup coming NEVER, ask [@devkarthin](https://github.com/devkarthin)*
+
+DNS is handled by a dedicated pihole pi0 and routing is handeled by a [zimaboard](https://shop.zimaboard.com/en-ca/products/zimaboard-single-board-server) flashed with OPNsense
+
+## Nginx Proxy Manager Authelia config (temp)
+```
 location /authelia {
     internal;
     set $upstream_authelia http://authelia:9091/api/verify;
@@ -95,3 +116,4 @@ location /authelia {
 		real_ip_recursive on;
  
     }
+```
