@@ -1,0 +1,110 @@
+version: "3.8"
+services:
+  # Downloaders
+  # qbittorrent.sppongy.com
+  qbittorrent:
+    container_name: ${qbittorrentName}
+    image: ${provider}/qbittorrent
+    restart: ${restart}
+    ports:
+      - ${qbittorrentPort}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${config}/qbittorrent:/config
+      - ${data}/torrents:/data/torrents
+      - ${data}/media/books/manga:/data/media/books/manga # For auto manga downloading
+  # sabnzbd.sppongy.com
+  sabnzbd:
+    container_name: ${sabnzbdName}
+    restart: ${restart}
+    image: ${provider}/sabnzbd
+    ports:
+      - ${sabnzbdPort}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${config}/sabnzbd:/config
+      - ${data}/usenet:/data/usenet
+  # Arr apps
+  prowlarr:
+    container_name: ${prowlarrName}
+    restart: ${restart}
+    image: ${provider}/prowlarr
+    ports:
+      - ${prowlarrPort}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${config}/prowlarr:/config
+  bazarr:
+    container_name: ${bazarrName}
+    restart: ${restart}
+    image: ${provider}/bazarr
+    ports:
+      - ${bazarrPort}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${config}/bazarr:/config
+      - ${media}:/data/media
+  sonarr:
+    container_name: ${sonarrName}
+    restart: ${restart}
+    image: ${provider}/sonarr
+    ports:
+      - ${sonarrPort}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${config}/sonarr:/config
+      - ${data}:/data
+      - ${data}/usenet/:/data/usenet
+  radarr:
+    container_name: ${radarrName}
+    restart: ${restart}
+    image: ${provider}/radarr
+    ports:
+      - ${radarrPort}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${config}/radarr:/config
+      - ${data}:/data
+  doplarr:
+    container_name: doplarr
+    restart: unless-stopped
+    image: ${provider}/doplarr:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+      - OVERSEERR__API=
+      - OVERSEERR__URL=
+      - SONARR__URL=http://sonarr:${sonarrPort}
+      - RADARR__URL=http://radarr:${radarrPort}
+      - SONARR__API=/run/secrets/sonarr
+      - RADARR__API=/run/secrets/radarr
+      - DISCORD__TOKEN=/run/secrets/doplarr
+      - LOG_LEVEL=:report
+    volumes:
+      - ${config}/doplarr/:/config

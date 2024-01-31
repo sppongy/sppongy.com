@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  # watch.sppongy.com
+  jellyfin:
+    container_name: ${jellyfinName}
+    restart: ${restart}
+    image: ${provider}/jellyfin
+    ports:
+      - ${jellyfinPort}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+      - device=/dev/video10:/dev/video10
+      - device=/dev/video11:/dev/video11
+      - device=/dev/video12:/dev/video12
+    volumes:
+      - ${config}/jellyfin:/config
+      - ${media}:/data/media
+  # requests.sppongy.com
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: ${jellyseerrName}
+    restart: ${restart}
+    ports:
+      - ${jellyseerrPort}
+    environment:
+      - TZ=${TZ}
+      - LOG_LEVEL=debug
+    volumes:
+      - ${config}/jellyseerr:/app/config
+      - ${data}:/data
+  # read.sppongy.com
+  kavita:
+    image: kizaing/kavita:latest
+    container_name: ${kavitaName}
+    restart: ${restart}
+    ports:
+      - ${kavitaPort}
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${config}/kavita:/kavita/config
+      - ${media}/books:/data/media/books 
+  #git.sppongy.com
+  gitea:
+    image: gitea/gitea:linux-arm64
+    container_name: ${giteaName}
+    restart: ${restart}
+    environment: 
+     - USER_UID=${PUID}
+     - USER_GID=${PGID}
+    volumes:
+     - ${data}/gitea:/data
+     - /etc/timezone:/etc/timezone:ro
+     - /etc/localtime:/etc/localtime:ro
+    ports:
+     - ${giteaPort}
+     - ${giteaAdmin}

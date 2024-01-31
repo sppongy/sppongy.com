@@ -1,0 +1,107 @@
+version: "3.8"
+include:
+  - frontend.yaml
+  - media.yaml
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: ${vaultwardenName}
+    restart: ${restart}
+    environment:
+      - DOMAIN=${vaultwardenURL}
+      - PUSH_ENABLED=true
+      - PUSH_INSTALLATION_ID=/run/secrets/vaultID
+      - PUSH_INSTALLATION_KEY=/run/secrets/vaultKey
+   ports:
+      - ${vaultwardenPort}
+   volumes:
+      - ${data}/vaultwarden:/data
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy
+    container_name: wg-easy
+    restart: ${restart}
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    environment:
+      - WG_HOST=vpn.sppongy.com
+      - WG_DEFAULT_DNS=192.168.1.105
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    volumes:
+      - ${config}/wg-easy:/etc/wireguard
+  nginxpm:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: ${nginxpmName}
+    restart: ${restart}
+    ports:
+      - ${http}
+      - ${https}
+      - ${nginxpmPort}
+    volumes:
+      - ${data}/nginxpm:/data
+      - ${data}/letsencrypt:/etc/letsencrypt
+      - ${data}/www:/data/www
+  authelia:
+    container_name: authelia
+    image: authelia/authelia
+    volumes:
+      - ${config}/authelia:/config
+    ports:
+      - 9091:9091
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    secrets: [JWT_SECRET, SESSION_SECRET, STORAGE_ENCRYPTION_KEY]  
+    environment:
+      AUTHELIA_JWT_SECRET_FILE: /run/secrets/JWT_SECRET
+      AUTHELIA_SESSION_SECRET_FILE: /run/secrets/SESSION_SECRET
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /run/secrets/STORAGE_ENCRYPTION_KEY
+    depends_on:
+      - redis
+  redis:
+    container_name: redis
+    image: redis:alpine
+    volumes:
+      - ${data}/redis:/data
+    expose:
+      - 6379
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: ${homepageName}
+    restart: ${restart}
+    ports:
+      - ${homepagePort}
+    volumes:
+      - ${config}/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+secrets:
+  JWT_SECRET:
+    file: ./secrets/JWT_SECRET
+  SESSION_SECRET:
+    file: ./secrets/SESSION_SECRET 
+  STORAGE_ENCRYPTION_KEY:
+    file: ./secrets/STORAGE_ENCRYPTION_KEY
+  wguiPassword:
+    file: ./secrets/wgui
+  doplarrToken:
+    file: ./secrets/doplarr
+  redbotToken:
+    file: ./secrets/redbot
+  sonarrAPI:
+    file: ./secrets/sonarr
+  radarrAPI:
+    file: ./secrets/radarr
+  vaultID:
+    file: ./secrets/vaultID
+  vaultKey:
+    file: ./secrets/vaultKey
+        
