@@ -2,6 +2,7 @@ version: "3.8"
 include:
   - frontend.yaml
   - media.yaml
+  
 services:
   vaultwarden:
     image: vaultwarden/server:latest
@@ -12,9 +13,9 @@ services:
       - PUSH_ENABLED=true
       - PUSH_INSTALLATION_ID=/run/secrets/vaultID
       - PUSH_INSTALLATION_KEY=/run/secrets/vaultKey
-   ports:
+    ports:
       - ${vaultwardenPort}
-   volumes:
+    volumes:
       - ${data}/vaultwarden:/data
   # Reverse proxy
   nginxpm:
@@ -83,6 +84,7 @@ services:
       - ${data}/grafana:/var/lib/grafana
     ports:
       - "3001:3000"
+    user: "1000"
   # Homepage
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
