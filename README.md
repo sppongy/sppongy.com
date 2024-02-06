@@ -115,5 +115,5 @@ location /authelia {
 		real_ip_header X-Forwarded-For;
 		real_ip_recursive on;
  
-    }
+}
 ```

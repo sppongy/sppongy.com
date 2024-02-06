@@ -1,13 +1,25 @@
+:root {
+	--bg-init-size: 23em;
+	--bg-size: 100em;
+}
+
+@font-face {
+	font-family: Sonoma;
+	src: url('Sonoma.otf') format('opentype');
+}
+
 body {
 	background: #040403;
 	height: 100%;
 	overflow: hidden;
 }
 
+h1 {
+	font-family: Sonoma;
+}
+
 .boot {
-	display: block;
-  -webkit-animation: fadeInOut 1.5s linear forwards;
-  animation: fadeInOut 1.5s linear forwards;
+	visibility: hidden;
 }
 
 .bootLogo img {
@@ -28,9 +40,32 @@ body {
 	text-shadow: 2px 2px 2px black;
 }
 
-.main {
-	display: none;
-	animation: fadeIn 1s linear forwards;
+.rightHeader {
+	position: absolute;
+	top: 2%;
+	right: 3%;
+}
+
+.leftHeader {
+	position: absolute;
+	top: 2%;
+	left: 3%;
+}
+
+
+.bLogo {
+	width: 4em;
+	height: 4em;
+	display: inline-block;
+	padding: 1em;
+}
+
+.linkBottom {
+	position: absolute;
+	bottom: 10%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .background {
@@ -46,19 +81,17 @@ body {
 	position: absolute;
 	text-align: center;	
 	color: white;
-	font-size: 5em;
-	text-shadow: 2px 2px 2px black;
+	font-size: 10em;
+	text-shadow: 1px 1px 1px darkblue, -1px 1px 1px darkred;
 	z-index: 1;
-	top: 15%;
+	top: 2.5%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
 
 .logo {
-	height: 25em;
-	width: 25em;
-	animation: grow 0.5s, shake 0.5s, shrink 4s, growMore 5000s;
-	animation-delay: 0.2s, 0.7s, 1.2s, 5.2s;
+	height: var(--bg-init-size);
+	width: var(--bg-init-size);
 }
 
 a:link, a:visited, a:hover, a:active {
@@ -66,79 +99,65 @@ a:link, a:visited, a:hover, a:active {
 	text-decoration: none;
 }
 
-#links {
-	text-align: center;
-	font-size: 1.5em;
+.webring {
+	color: white;
 
 }
 
-.linkLeft {
+.webringCenter {
 	position: absolute;
-	top: 50%;
-	left: 25%;
+	bottom: 3%;
+	left: 50%;
 	transform: translate(-50%, -50%);
 }
 
-.linkRight {
+.webringLeft {
 	position: absolute;
-	top: 50%;
-	left: 75%;
-	transform: translate(-50%, -50%);
+	bottom: 1.5%;
+	left: 2.5%;
 }
+
+.webringRight {
+	position: absolute;
+	bottom: 1.5%;
+	right: 2.5%;
+}
+
+
 /* animations */
 
-@-webkit-keyframes fadeInOut {
-  0%,100% { opacity: 0; }
-  50% { opacity: 1; }
+/* boot animations */
+@-webkit-keyframes boot {
+	0%,100% { opacity: 0; }
+	50% { opacity: 1; }
 }
 
-@keyframes fadeInOut {
-  0%,100% { opacity: 0; }
-  50% { opacity: 1; }
-}
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+/* background animations */
+@-webkit-keyframes jumpscare {
+	/* grow */
+	0% {height: var(--bg-init-size); width: var(--bg-init-size); opacity: 0.2}
+	10% {height: var(--bg-size); width: var(--bg-size); opacity: 1}
+	/* shake */
+	11% { transform: translate(1px, 1px) rotate(0deg)}
+	12% { transform: translate(-1px, -2px) rotate(-1deg)}
+	13% { transform: translate(-3px, 0px) rotate(1deg)}
+	14% { transform: translate(3px, 2px) rotate(0deg)}
+	15% { transform: translate(1px, -1px) rotate(1deg)}
+	16% { transform: translate(-1px, 2px) rotate(-1deg)}
+	17% { transform: translate(-3px, 1px) rotate(0deg)}
+	18% { transform: translate(3px, 1px) rotate(-1deg)}
+	19% { transform: translate(-1px, -1px) rotate(1deg)}
+	20% { transform: translate(1px, 2px) rotate(0deg)}
+	21% { transform: translate(1px, -2px) rotate(-1deg); height: var(--bg-size); width: var(--bg-size)}
+	/* shrink */
+	100% {height: var(--bg-init-size); width: var(--bg-init-size); opacity: 0.2}
 }
 
 @keyframes grow {
-	from {height: 25em}
-	from {width: 25em}
-	from {opacity: 0.2}
-	to {height: 100em}
-	to {width: 100em}
-	to {opacity: 1}
-}
-
-@keyframes shrink {
-	from {height: 100em}
-	from {width: 100em}
-	from {opacity: 1}
-	to {height: 25em}
-	to {width: 25em}
-	to {opacity: 0.2}
-}
-
-@keyframes growMore {
-	from {height: 25em}
-	from {width: 25em}
+	from {height: var(--bg-init-size)}
+	from {width: var(--bg-init-size)}
 	from {opacity: 0.2}
 	to {height: 1000em}
 	to {width: 1000em}
 	to {opacity: 0.2}
-}
-
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); height: 100em; width: 100em; }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); height: 100em; width: 100em;}
-  20% { transform: translate(-3px, 0px) rotate(1deg); height: 100em; width: 100em;}
-  30% { transform: translate(3px, 2px) rotate(0deg); height: 100em; width: 100em;}
-  40% { transform: translate(1px, -1px) rotate(1deg); height: 100em; width: 100em;}
-  50% { transform: translate(-1px, 2px) rotate(-1deg); height: 100em; width: 100em;}
-  60% { transform: translate(-3px, 1px) rotate(0deg); height: 100em; width: 100em;}
-  70% { transform: translate(3px, 1px) rotate(-1deg); height: 100em; width: 100em;}
-  80% { transform: translate(-1px, -1px) rotate(1deg); height: 100em; width: 100em;}
-  90% { transform: translate(1px, 2px) rotate(0deg); height: 100em; width: 100em;}
-  100% { transform: translate(1px, -2px) rotate(-1deg); height: 100em; width: 100em;}
 }

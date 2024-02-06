@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
-		<div class="wrapper">
+		<main>
 			<div id="boot" class="boot">
 				<div class="bootLogo">
 					<img src="assets/spin.gif">
@@ -16,39 +16,105 @@
 			</div>
 			<div id="main" class="main">
 				<div class="header">
-					<h1><sup>S</sup>ppongy<sub>.com</sub></h1> 
+					<h1><sup>S</sup>ppongy<sub>.com</sub></h1>
+					<div class="rightHeader">
+						<!--Jumpscare toggle WIP
+						<label id="jumpSwitch" class="switch">
+							<input type="checkbox" id="jumpSwitch" onClick="jumpSwitcher(this.id)">
+							<span class="slider"></span>
+						</label>
+						-->
+					</div>
+					<div class="leftHeader">
+						<!--Boot toggle WIP
+						<label id="bootSwitch" class="switch">
+							<input type="checkbox" id="bootSwitch" onClick="bootSwitcher(this.id)">
+							<span class="slider"></span>
+						</label>
+						-->
+					</div>
 				</div>
-				<div class="linkLeft" id="links">
-					<ul>
-						<li><a href="https://discord.gg/66mTszEPhJ"><p>Discord Server(WIP)</p></a></li>
-						<li><a href="https://media.sppongy.com"><p>Media(WIP)</p></a></li>
-						<li><a href="https://uptime.sppongy.com"><p>Uptime(WIP)</p></a></li>
-					</ul>
+				<div class="links">
+					<div class="linkCurved">
+					</div>
+					<div class="linkBottom">
+						<a href="https://watch.sppongy.com"><img class="bLogo" src="assets/jellyfin.png"></a>
+						<a href="https://requests.sppongy.com"><img class="bLogo" src="assets/jellyseerr.png"></a>
+						<a href="https://read.sppongy.com"><img class="bLogo" src="assets/kavita.svg"></a>
+						<a href="https://git.sppongy.com"><img class="bLogo" src="assets/gitea.png"></img></a>
+						<a href="https://discord.sppongy.com"><img class="bLogo" src="assets/discord.png"></a>
+					</div>
 				</div>
-				<div class="linkRight" id="links">
-					<ul>
-						<li><a href="https://discord.com/users/271430521169510401"><p>Discord</p></a></li>
-						<li><a href="https://twitter.com/sppongy"><p>Twitter</p></a></li>
-						<li><a href="https://steamcommunity.com/id/sppongy"><p>Steam</p></a></li>
-					</ul>
-				</div>
+				<footer class="webring">
+					<a href="https://nermhole.world"><p class="webringCenter">nermhole.world</p></a>
+					<a href="https://deadusb.com"><p class="webringLeft">&lsaquo; Deadusb.com</p></a>
+					<a href="https://karthin.com"><p class="webringRight">Karthin.com &rsaquo;</p></a>
+				</footer>
 				<div class="background">
 					<img src="assets/logo.png" id="logo" class="logo">
 				</div>
 			</div>
-		</div>
+		</main>
 		<script>
-			setTimeout(function loading(){
-				document.getElementById("main").style.display = "block";
-				document.getElementById("boot").style.display = "none";
-			}, 1500);
-			
+			// Animations
+			function boot() {
+				document.getElementById('boot').style.visibility = "visible";
+				document.getElementById('boot').style.animation = "boot 3s linear forwards";
+				document.getElementById('main').style.visibility = "hidden";
+				setTimeout(function() {
+					document.getElementById('boot').style.visibility = "hidden";
+					document.getElementById('main').style.visibility = "visible";
+				}, 3000);
+			}			
+
+			function jump(){
+				document.getElementById('logo').style.animation = "jumpscare 4s linear forwards";
+				setTimeout(function() {
+					document.getElementById('logo').style.animation = "grow 5000s linear forwards";
+				}, 4000);
+			}
+
+			// Garbage code not working rn so bypassed
+			boot();
+			setTimeout(function() {
+				jump();
+			}, 3000);
+
+			// Boot toggle, remember state
+			function bootSwitcher(id) {
+				var checkBox = document.getElementById(id);
+				if (checkBox.checked == true) {
+					localStorage.setItem('boot', 'true');
+				} else {
+					localStorage.setItem('boot', 'false');
+				}
+			}
+
+			// Jumpscare toggle, remember state
+			function jumpSwitcher(id) {
+				var checkBox = document.getElementById(id);
+				if (checkBox.checked == true) {
+					localStorage.setItem('jump', 'true');
+				} else {
+					localStorage.setItem('jump', 'false');
+				}
+			}
+
+			// Check for boot and jumpscare state from local storage on load
+			if (localStorage.getItem('boot') == 'true') {
+				document.getElementById('bootSwitch').checked = true;
+				boot();
+				if (localStorage.getItem('jump') == 'true') {
+					document.getElementById('jumpSwitch').checked = true;
+					setTimeout(function() {
+						jump();
+					}, 3000);
+				}
+			} else if (localStorage.getItem('jump') == 'true') {
+					document.getElementById('jumpSwitch').checked = true;
+					jump();
+			}
+
 		</script>
-		<noscript>
-			<style>
-				.main {display: block}
-				.boot {display: none}
-			</style>
-		</noscript>
 	</body>
 </html>
