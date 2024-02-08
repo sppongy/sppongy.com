@@ -59,12 +59,12 @@
 			// Animations
 			function boot() {
 				document.getElementById('boot').style.visibility = "visible";
-				document.getElementById('boot').style.animation = "boot 3s linear forwards";
+				document.getElementById('boot').style.animation = "boot 1s linear forwards";
 				document.getElementById('main').style.visibility = "hidden";
 				setTimeout(function() {
 					document.getElementById('boot').style.visibility = "hidden";
 					document.getElementById('main').style.visibility = "visible";
-				}, 3000);
+				}, 1000);
 			}			
 
 			function jump(){
@@ -78,7 +78,7 @@
 			boot();
 			setTimeout(function() {
 				jump();
-			}, 3000);
+			}, 1000);
 
 			// Boot toggle, remember state
 			function bootSwitcher(id) {
