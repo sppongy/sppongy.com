@@ -3,6 +3,12 @@
 	--bg-size: 100em;
 }
 
+img {
+	pointer-events: none;
+	user-select: none;
+}
+
+
 @font-face {
 	font-family: Sonoma;
 	src: url('Sonoma.otf') format('opentype');
@@ -66,6 +72,7 @@ h1 {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	z-index: 3;
 }
 
 .background {
@@ -74,7 +81,6 @@ h1 {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	z-index: 4;
 }
 
 .header h1 {
@@ -101,7 +107,7 @@ a:link, a:visited, a:hover, a:active {
 
 .webring {
 	color: white;
-
+	z-index: 3;
 }
 
 .webringCenter {
