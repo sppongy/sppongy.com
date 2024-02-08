@@ -1,13 +1,27 @@
 version: "3.8"
 services:
   # Downloaders
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - VPN_SERVICE_PROVIDER=airvpn
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=eK+ukFjladE+P6yxVuGESSKbyeQzkd0MI4VB3ECAz0E=
+      - WIREGUARD_PRESHARED_KEY=ciJmRFs/PQJT6bvBNuyEwnGwJFM9sEbb0IBNupmKrOE=
+      - WIREGUARD_ADDRESSES=10.158.20.56/32
+      - SERVER_COUNTRIES=Canada
+      - FIREWALL_VPN_INPUT_PORTS=46575
+    ports:
+      - ${qbittorrentPort}
   # qbittorrent.sppongy.com
   qbittorrent:
     container_name: ${qbittorrentName}
     image: ${provider}/qbittorrent
     restart: ${restart}
-    ports:
-      - ${qbittorrentPort}
+    network_mode: "service:gluetun"
     environment:
       - PUID=${PUID}
       - PGID=${PUID}

@@ -59,32 +59,32 @@ services:
     environment:
       - TZ=${TZ}
   # Logging
-  loki:
-    container_name: loki
-    image: grafana/loki:latest
-    restart: ${restart}
-    volumes:
-      - ${data}/loki:/etc/loki
-    ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/loki-config.yml
-  promtail:
-    container_name: promtail
-    image: grafana/promtail:latest
-    restart: ${restart}
-    volumes:
-      - /var/log:/var/log
-      - ${data}/promtail:/etc/promtail
-    command: -config.file=/etc/promtail/promtail-config.yml
-  grafana:
-    container_name: grafana
-    image: grafana/grafana:latest
-    restart: ${restart}
-    volumes:
-      - ${data}/grafana:/var/lib/grafana
-    ports:
-      - "3001:3000"
-    user: "1000"
+  #  loki:
+  #   container_name: loki
+  #  image: grafana/loki:latest
+  #  restart: ${restart}
+  # volumes:
+  #    - ${data}/loki:/etc/loki
+  #  ports:
+  #   - "3100:3100"
+  # command: -config.file=/etc/loki/loki-config.yml
+  #promtail:
+  #  container_name: promtail
+  #  image: grafana/promtail:latest
+  # restart: ${restart}
+  #  volumes:
+  #   - /var/log:/var/log
+  #   - ${data}/promtail:/etc/promtail
+  # command: -config.file=/etc/promtail/promtail-config.yml
+  # grafana:
+  # container_name: grafana
+  #  image: grafana/grafana:latest
+  # restart: ${restart}
+  #  volumes:
+  #    - ${data}/grafana:/var/lib/grafana
+  # ports:
+  #   - "3001:3000"
+  #  user: "1000"
   # Homepage
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
