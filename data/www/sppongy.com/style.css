@@ -129,6 +129,9 @@ a:link, a:visited, a:hover, a:active {
 	right: 2.5%;
 }
 
+.webring a, .webring p {
+	z-index: 3;
+}
 
 /* animations */
 
